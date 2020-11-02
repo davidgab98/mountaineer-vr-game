@@ -53,11 +53,25 @@ public class HandPresence : MonoBehaviour {
         }
     }
 
+    void UpdateHandAnimation() {
+        if(targetDevice.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue)) {
+            handAnimator.SetFloat("Trigger", triggerValue);
+        } else {
+            handAnimator.SetFloat("Trigger", 0);
+        }
+
+        if(targetDevice.TryGetFeatureValue(CommonUsages.grip, out float gripValue)) {
+            handAnimator.SetFloat("Grip", gripValue);
+        } else {
+            handAnimator.SetFloat("Grip", 0);
+        }
+    }
+
     // Update is called once per frame
     void Update() {
 
         //Si no encontramos un targetDevice intentamos buscarlo hasta que lo encontremos
-        if(!targetDevice.isValid)  { //Para esto, usamos .isValid en lugar de == null
+        if(!targetDevice.isValid) { //Para esto, usamos .isValid en lugar de == null
             TryInitialize();
         } else {
             /*Con esto descomentado, cuando pulsemos el triggerButton se mostrara el modelo del controlador en lugar de las manos: 
@@ -76,8 +90,6 @@ public class HandPresence : MonoBehaviour {
                 spawnedHandModel.SetActive(false);
             }
         }
-
-        
 
 
         //#### EJEMPLO: LLAMADAS A LOS BOTONES (INPUTS) DEL CONTROLADOR ####/
@@ -102,17 +114,4 @@ public class HandPresence : MonoBehaviour {
         }*/
     }
 
-    void UpdateHandAnimation() {
-        if(targetDevice.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue)) {
-            handAnimator.SetFloat("Trigger", triggerValue);
-        } else {
-            handAnimator.SetFloat("Trigger", 0);
-        }
-
-        if(targetDevice.TryGetFeatureValue(CommonUsages.grip, out float gripValue)) {
-            handAnimator.SetFloat("Grip", gripValue);
-        } else {
-            handAnimator.SetFloat("Grip", 0);
-        }
-    }
 }
