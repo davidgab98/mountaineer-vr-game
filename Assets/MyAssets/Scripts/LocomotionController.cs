@@ -14,14 +14,25 @@ public class LocomotionController : MonoBehaviour
     public bool enableLeftTeleport {get; set; } = true;
     public bool enableRightTeleport { get; set; } = true;
 
+    public XRRayInteractor leftRayInteractor;
+    public XRRayInteractor rightRayInteractor;
+
     void Update()
     {
+        // Variables que pasamos a TryGetHitInfo, esta funcion nos devuelve si el rayInteractor esta colisionando con algo válido o no
+        Vector3 pos  = new Vector3();
+        Vector3 norm = new Vector3();
+        int index = 0;
+        bool validTarget = false;
+
         if(leftTeleportRay) {
-            leftTeleportRay.gameObject.SetActive(enableLeftTeleport && CheckIfActivated(leftTeleportRay));
+            bool isLeftInteractorRayHovering = leftRayInteractor.TryGetHitInfo(ref pos, ref norm, ref index, ref validTarget);
+            leftTeleportRay.gameObject.SetActive(enableLeftTeleport && CheckIfActivated(leftTeleportRay) && !isLeftInteractorRayHovering);
         }
 
         if(rightTeleportRay) {
-            rightTeleportRay.gameObject.SetActive(enableRightTeleport && CheckIfActivated(rightTeleportRay));
+            bool isRightInteractorRayHovering = rightRayInteractor.TryGetHitInfo(ref pos, ref norm, ref index, ref validTarget);
+            rightTeleportRay.gameObject.SetActive(enableRightTeleport && CheckIfActivated(rightTeleportRay) && !isRightInteractorRayHovering);
         }
     }
 
