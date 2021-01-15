@@ -13,7 +13,7 @@ public class ContinuousMovement : MonoBehaviour
     public float additionalHeight = 0.2f; // To move the rig
 
     private float fallingSpeed;
-    private XRRig rig; // Get the XXRig to acces to the head (camera)
+    private XRRig rig; // Get the XRRig to acces to the head (camera)
     private Vector2 inputAxis;
     private CharacterController character;
 
@@ -53,7 +53,7 @@ public class ContinuousMovement : MonoBehaviour
         character.Move(Vector3.up * fallingSpeed);
     }
 
-    // Para rotar el CharacterCollider(capsule) segun la camara (a donde mire el player)
+    // Para rotar el CharacterCollider(capsule) segun la camara (a donde mire el player) 
     void CapsuleFollowHeadset() {
         character.height = rig.cameraInRigSpaceHeight + additionalHeight;
         // InverseTransformPoint: da la posicion local que tendria el objeto si fuera un hijo de la camara
@@ -61,7 +61,7 @@ public class ContinuousMovement : MonoBehaviour
         character.center = new Vector3(capsuleCenter.x, character.height/2 + character.skinWidth, capsuleCenter.z);
     }
 
-    // Chequea si estamos tocando el suelo
+    // Chequea si estamos tocando el suelo 
     private bool CheckIfGrounded() {
         // Para comprobar si tocamos el suelo usamos un sphereCast, es como un rayCast pero más ancho
 

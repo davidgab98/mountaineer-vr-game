@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -13554,6 +13554,8 @@ MonoBehaviour:
   rightTeleportRay: {fileID: 175888151}
   teleportActivationButton: 2
   activationThreshold: 0.1
+  leftRayInteractor: {fileID: 0}
+  rightRayInteractor: {fileID: 0}
 --- !u!143 &2115277886
 CharacterController:
   m_ObjectHideFlags: 0
