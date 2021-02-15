@@ -5,15 +5,19 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     public GameObject bullet;
-    float bulletSpeed = 200f;
+    public Transform barrel;
+    float bulletSpeed = 18f;
 
     public AudioSource audioSource;
     public AudioClip audioClip;
 
     // En el tuturial de Valem hay mas cosas ricas en este script, como lanzar una bala
     public void Fire() {
-        GameObject spawnedBullet = Instantiate(bullet, transform.position, Quaternion.identity);
-        spawnedBullet.GetComponent<Rigidbody>().AddForce(transform.forward * bulletSpeed);
+        GameObject spawnedBullet = Instantiate(bullet, barrel.position, Quaternion.identity);
+        spawnedBullet.transform.rotation = Quaternion.LookRotation(barrel.forward);
+        spawnedBullet.GetComponent<Rigidbody>().AddForce(barrel.forward * bulletSpeed, ForceMode.Impulse);
+
+        Destroy(spawnedBullet, 5);
 
         audioSource.PlayOneShot(audioSource.clip);
     }
