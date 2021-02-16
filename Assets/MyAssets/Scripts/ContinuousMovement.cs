@@ -6,7 +6,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class ContinuousMovement : MonoBehaviour
 {
-    public float speed = 1;
+    public float walkingSpeed = 1;
+    public float runningSpeed = 2;
     public XRNode inputSource;
     public float gravity = -9.81f;
     public LayerMask groundLayer;
@@ -14,7 +15,8 @@ public class ContinuousMovement : MonoBehaviour
 
     private float fallingSpeed;
     private XRRig rig; // Get the XRRig to acces to the head (camera)
-    private Vector2 inputAxis;
+    private Vector2 inputAxis; //Update by primary2dAxis
+    private bool running; //true if Primary2DAxisClick is clicked
     private CharacterController character;
 
     void Start()
@@ -29,6 +31,7 @@ public class ContinuousMovement : MonoBehaviour
         InputDevice device = InputDevices.GetDeviceAtXRNode(inputSource);
 
         device.TryGetFeatureValue(CommonUsages.primary2DAxis, out inputAxis);
+        device.TryGetFeatureValue(CommonUsages.primary2DAxisClick, out running);
     }
 
     // FIXED UPDATE se ejecuta cada vez que Unity ejecuta las fisicas
@@ -41,16 +44,20 @@ public class ContinuousMovement : MonoBehaviour
         Quaternion headY = Quaternion.Euler(0, rig.cameraGameObject.transform.eulerAngles.y, 0); // Get the y rotation of the camera (head) of the xrrig
         Vector3 direction = headY * new Vector3(inputAxis.x, 0, inputAxis.y);  // Multiply the rotation of the head in y by the direction to move, then we move considering where the player is looking
 
-        character.Move(direction * Time.fixedDeltaTime * speed);
+        if(!running)
+            character.Move(direction * Time.fixedDeltaTime * walkingSpeed);
+        else
+            character.Move(direction * Time.fixedDeltaTime * runningSpeed);
 
-        // Move vertical (gravity, only when not on the ground)
+        //Move vertical (gravity, only when not on the ground)
         bool isGrounded = CheckIfGrounded();
         if(isGrounded)
             fallingSpeed = 0; // Si estamos tocando el suelo, ponemos la velocidad de caida a 0, no caemos
         else
             fallingSpeed += gravity * Time.fixedDeltaTime; // Si no estamos tocando el suelo aumentamos la velocidad de caida con la gravedad
 
-        character.Move(Vector3.up * fallingSpeed);
+        character.Move(Vector3.up * fallingSpeed); // Esto podria hacerse solo cuando isGrounded es false y nos ahorrariamos hacerlo cada vez
+        
     }
 
     // Para rotar el CharacterCollider(capsule) segun la camara (a donde mire el player) 

@@ -1299,7 +1299,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 72209282}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Attach Transform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5943,7 +5943,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 319983556}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 394250648}
   m_InteractionLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -17162,7 +17163,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 820395085}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17260,6 +17261,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &837652691 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8455283884629597544, guid: 35db3350d4ce1614b9b6215897a38641,
+    type: 3}
+  m_PrefabInstance: {fileID: 3331804121321749353}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07a00c8bb0e6634fa50cc8fe9b1dde7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &841388896 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7929909178309808189, guid: 35913c390fba52c4a99bd37f52506a6b,
@@ -19683,7 +19696,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 319983556}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 1024661842}
   m_InteractionLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -23791,12 +23805,12 @@ PrefabInstance:
     - target: {fileID: -5922622823359544968, guid: 4baccac6f89e0c44b9fe3bc88b0b9fb4,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: -3485796134441671115, guid: 4baccac6f89e0c44b9fe3bc88b0b9fb4,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4baccac6f89e0c44b9fe3bc88b0b9fb4,
         type: 3}
@@ -23806,27 +23820,27 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4baccac6f89e0c44b9fe3bc88b0b9fb4,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6619225641134156614, guid: 4baccac6f89e0c44b9fe3bc88b0b9fb4,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7053421877332046286, guid: 4baccac6f89e0c44b9fe3bc88b0b9fb4,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7814948468748046683, guid: 4baccac6f89e0c44b9fe3bc88b0b9fb4,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8592408913740445013, guid: 4baccac6f89e0c44b9fe3bc88b0b9fb4,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4baccac6f89e0c44b9fe3bc88b0b9fb4, type: 3}
@@ -23946,6 +23960,8 @@ MonoBehaviour:
   secondHandGrabPoints:
   - {fileID: 394250649}
   - {fileID: 1024661840}
+  twoHandRotationType: 1
+  snapToSecondHand: 0
 --- !u!1 &1390515477 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6619225641134156614, guid: 4baccac6f89e0c44b9fe3bc88b0b9fb4,
@@ -24176,6 +24192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 2769066626537655051, guid: 60203532e8bb27944a3b913fe914bb3f, type: 3}
   barrel: {fileID: 820395085}
+  bulletAmount: 3
   audioSource: {fileID: 1390515490}
   audioClip: {fileID: 0}
 --- !u!1 &1396315743 stripped
@@ -38335,7 +38352,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19827d8a9dbb2aa47bdb5e3ee6c0056e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.4
+  walkingSpeed: 1
+  runningSpeed: 2
   inputSource: 4
   gravity: -9.81
   groundLayer:
@@ -38676,10 +38694,25 @@ PrefabInstance:
       propertyPath: m_InteractionManager
       value: 
       objectReference: {fileID: 319983556}
+    - target: {fileID: 6451046046433646201, guid: 35db3350d4ce1614b9b6215897a38641,
+        type: 3}
+      propertyPath: m_OnActivate.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 837652691}
+    - target: {fileID: 6451046046433646201, guid: 35db3350d4ce1614b9b6215897a38641,
+        type: 3}
+      propertyPath: m_OnActivate.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Fire
+      objectReference: {fileID: 0}
     - target: {fileID: 8455283884629597544, guid: 35db3350d4ce1614b9b6215897a38641,
         type: 3}
       propertyPath: bulletSpeed
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455283884629597544, guid: 35db3350d4ce1614b9b6215897a38641,
+        type: 3}
+      propertyPath: bulletAmount
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35db3350d4ce1614b9b6215897a38641, type: 3}
