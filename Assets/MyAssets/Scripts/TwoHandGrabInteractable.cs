@@ -41,8 +41,8 @@ public class TwoHandGrabInteractable : XRGrabInteractable {
         // De esta forma podemos llamar a las funciones de OnSecondHandGrab/Release cuando seleccionamos o deseleccionamos 
         // los simpleInteractable de los SecondHandGrabPoints
         foreach(var item in secondHandGrabPoints) {
-            item.onSelectEnter.AddListener(OnSecondHandGrab);
-            item.onSelectExit.AddListener(OnSecondHandRelease);
+            item.onSelectEntered.AddListener(OnSecondHandGrab);
+            item.onSelectExited.AddListener(OnSecondHandRelease);
         }
     }
 
@@ -111,17 +111,17 @@ public class TwoHandGrabInteractable : XRGrabInteractable {
     }
 
     // When we grab with the first hand
-    protected override void OnSelectEnter(XRBaseInteractor interactor) {
+    protected override void OnSelectEntered(XRBaseInteractor interactor) {
         Debug.Log("First Hand Enter");
-        base.OnSelectEnter(interactor);
+        base.OnSelectEntered(interactor);
 
         attachInitialLocalRotation = interactor.attachTransform.localRotation;
     }
 
     // When we release with the first hand
-    protected override void OnSelectExit(XRBaseInteractor interactor) {
+    protected override void OnSelectExited(XRBaseInteractor interactor) {
         Debug.Log("First Hand Exit");
-        base.OnSelectExit(interactor);
+        base.OnSelectExited(interactor);
 
         // De esta forma forzamos a soltar el objeto con ambas manos cuando lo soltamos con el interactor principal (agarre principal)
         secondInteractor = null;

@@ -19,19 +19,16 @@ public class LocomotionController : MonoBehaviour
 
     void Update()
     {
-        // Variables que pasamos a TryGetHitInfo, esta funcion nos devuelve si el rayInteractor esta colisionando con algo válido o no
-        Vector3 pos  = new Vector3();
-        Vector3 norm = new Vector3();
-        int index = 0;
-        bool validTarget = false;
-
+        //TryGetHitInfo nos devuelve si el rayInteractor esta colisionando con algo válido o no
         if(leftTeleportRay) {
-            bool isLeftInteractorRayHovering = leftRayInteractor.TryGetHitInfo(ref pos, ref norm, ref index, ref validTarget);
+            //bool isLeftInteractorRayHovering = leftRayInteractor.TryGetHitInfo(out pos, out norm, out index, out validTarget);
+            bool isLeftInteractorRayHovering = leftRayInteractor.TryGetHitInfo(out _, out _, out _, out _); //Usamos _ (valor de descarte) debido a que no nos interesa el valor de salida (asi, se lo indicamos al compilador y a un posible lector del codigo)
             leftTeleportRay.gameObject.SetActive(enableLeftTeleport && CheckIfActivated(leftTeleportRay) && !isLeftInteractorRayHovering);
         }
 
         if(rightTeleportRay) {
-            bool isRightInteractorRayHovering = rightRayInteractor.TryGetHitInfo(ref pos, ref norm, ref index, ref validTarget);
+            //bool isRightInteractorRayHovering = rightRayInteractor.TryGetHitInfo(out pos, out norm, out index, out validTarget);
+            bool isRightInteractorRayHovering = rightRayInteractor.TryGetHitInfo(out _, out _, out _, out _);
             rightTeleportRay.gameObject.SetActive(enableRightTeleport && CheckIfActivated(rightTeleportRay) && !isRightInteractorRayHovering);
         }
     }
