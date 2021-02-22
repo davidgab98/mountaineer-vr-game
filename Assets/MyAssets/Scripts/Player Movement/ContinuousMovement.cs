@@ -43,21 +43,26 @@ public class ContinuousMovement : MonoBehaviour
         // Move horizontaly
         Quaternion headY = Quaternion.Euler(0, rig.cameraGameObject.transform.eulerAngles.y, 0); // Get the y rotation of the camera (head) of the xrrig
         Vector3 direction = headY * new Vector3(inputAxis.x, 0, inputAxis.y);  // Multiply the rotation of the head in y by the direction to move, then we move considering where the player is looking
-
+        
         if(!running)
             character.Move(direction * Time.fixedDeltaTime * walkingSpeed);
         else
             character.Move(direction * Time.fixedDeltaTime * runningSpeed);
 
-        //Move vertical (gravity, only when not on the ground)
+        // Move vertical
+        character.Move(Vector3.up * gravity * Time.fixedDeltaTime);
+
+        /* USING A RAYCAST TO CHECK IF GROUNDED
+            // De esta forma solo aplicamos fuerza negativa hacia abajo cuando CheckIfGrounded = false (no estemos tocando el suelo: gameobjects con layer=Ground)
+            // Puede dar problemas derivados de la longitud del rayCast que usamos para calcular si estamos tocando el suelo o no, pero da mucho más juego
         bool isGrounded = CheckIfGrounded();
         if(isGrounded)
             fallingSpeed = 0; // Si estamos tocando el suelo, ponemos la velocidad de caida a 0, no caemos
         else
             fallingSpeed += gravity * Time.fixedDeltaTime; // Si no estamos tocando el suelo aumentamos la velocidad de caida con la gravedad
-
-        character.Move(Vector3.up * fallingSpeed); // Esto podria hacerse solo cuando isGrounded es false y nos ahorrariamos hacerlo cada vez
         
+        character.Move(Vector3.up * fallingSpeed); // Esto podria hacerse solo cuando isGrounded es false y nos ahorrariamos hacerlo cada vez
+         */
     }
 
     // Para rotar el CharacterCollider(capsule) segun la camara (a donde mire el player) 
@@ -74,7 +79,7 @@ public class ContinuousMovement : MonoBehaviour
 
         // Cogemos el centro del player (global) y la longitud que queramos que tenga el SphereCast
         Vector3 rayStart = transform.TransformPoint(character.center);
-        float rayLenght = character.center.y + 0.01f;
+        float rayLenght = character.center.y + 0.5f;
 
         // Creamos el sphereCast y guardamos en hasHit si colisiona o no con groundLayer
         bool hasHit = Physics.SphereCast(rayStart, character.radius, Vector3.down, out RaycastHit hitInfo, rayLenght, groundLayer);
