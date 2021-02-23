@@ -15,6 +15,11 @@ public class Turning : MonoBehaviour {
     private float timeSinceLastSnapTurn = 0;
     private float timeBetweenSnapTurns = 0.3f;
 
+
+    private void Start() {
+        TryInitializeDevice();
+    }
+
     private void Update() {
         if(!targetDevice.isValid)
         {
