@@ -4,34 +4,49 @@ using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class Teleport : TeleportationProvider
-{
+public class Teleport : TeleportationProvider {
+    public enum TeleportTypes { BLINK, SHIFT, SCREENFADE };
+    public TeleportTypes teleportType;
+    public float shiftTeleportSpeed = 30;
+
     private CharacterController character;
-    private Vector3 nextDestination;
+    private Vector3 teleportDestination;
     private bool teleporting;
 
-    private void Start() {
+    protected override void Awake() {
         character = GetComponent<CharacterController>();
     }
 
     public override bool QueueTeleportRequest(TeleportRequest teleportRequest) {
         if(!teleporting) {
-            nextDestination = teleportRequest.destinationPosition;
+            teleportDestination = teleportRequest.destinationPosition;
             teleporting = true;
+            return true;
         }
 
-        return true;
-        //return base.QueueTeleportRequest(teleportRequest);
+        return false;
     }
 
-    private void FixedUpdate() {
+    protected override void Update() {
         if(teleporting) {
-            float step = 30 * Time.fixedDeltaTime;
-            character.transform.position = Vector3.MoveTowards(character.transform.position, nextDestination, step);
+            if(teleportType == TeleportTypes.SHIFT) {
+                ShiftTeleport();
+                if(character.transform.position.Equals(teleportDestination)) {
+                    teleporting = false;
+                }
+            } else if(teleportType == TeleportTypes.SCREENFADE) {
 
-            if(character.transform.position.Equals(nextDestination)) {
+            } else { // BLINK
+                character.transform.position = teleportDestination;
                 teleporting = false;
             }
         }
     }
+
+    void ShiftTeleport() {
+        float step = shiftTeleportSpeed * Time.deltaTime;
+        character.transform.position = Vector3.MoveTowards(character.transform.position, teleportDestination, step);
+    }
+
+
 }

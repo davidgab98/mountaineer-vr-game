@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class ContinuousMovement : MonoBehaviour
-{
+public class ContinuousMovement : MonoBehaviour {
     public float walkingSpeed = 1;
     public float runningSpeed = 2;
     public XRNode inputSource;
     public float gravity = -9.81f;
     public LayerMask groundLayer;
+    public float additionalHeight = 0.2f;
 
     private float fallingSpeed;
     private XRRig rig; // Get the XRRig to acces to the head (camera)
@@ -18,14 +18,12 @@ public class ContinuousMovement : MonoBehaviour
     private bool running; //true if Primary2DAxisClick is clicked
     private CharacterController character;
 
-    void Start()
-    {
+    void Start() {
         character = GetComponent<CharacterController>();
         rig = GetComponent<XRRig>();
     }
 
-    void Update()
-    {
+    void Update() {
         // Otra forma de coger un device diferente a GetDevicesWithCharacteristics (mas sencilla). Se usa un XRNode.
         InputDevice device = InputDevices.GetDeviceAtXRNode(inputSource);
 
@@ -36,10 +34,12 @@ public class ContinuousMovement : MonoBehaviour
     // FIXED UPDATE se ejecuta cada vez que Unity ejecuta las fisicas
     // PODEMOS AUMENTAR CADA CUANTO SE EJECUTAN LAS FISICAS EN ProjectSetting - Time - FixedTimeStep
     private void FixedUpdate() {
+        CapsuleFollowHeadset();
+
         // Move horizontaly
         Quaternion headY = Quaternion.Euler(0, rig.cameraGameObject.transform.eulerAngles.y, 0); // Get the y rotation of the camera (head) of the xrrig
         Vector3 direction = headY * new Vector3(inputAxis.x, 0, inputAxis.y);  // Multiply the rotation of the head in y by the direction to move, then we move considering where the player is looking
-        
+
         if(!running)
             character.Move(direction * Time.fixedDeltaTime * walkingSpeed);
         else
@@ -59,6 +59,14 @@ public class ContinuousMovement : MonoBehaviour
         
         character.Move(Vector3.up * fallingSpeed); // Esto podria hacerse solo cuando isGrounded es false y nos ahorrariamos hacerlo cada vez
          */
+    }
+
+    // Para rotar el CharacterCollider(capsule) segun la camara (a donde mire el player) 
+    void CapsuleFollowHeadset() {
+        character.height = rig.cameraInRigSpaceHeight + additionalHeight;
+        // InverseTransformPoint: da la posicion local que tendria el objeto si fuera un hijo de la camara
+        Vector3 capsuleCenter = transform.InverseTransformPoint(rig.cameraGameObject.transform.position);
+        character.center = new Vector3(capsuleCenter.x, character.height / 2 + character.skinWidth, capsuleCenter.z);
     }
 
     // Chequea si estamos tocando el suelo 

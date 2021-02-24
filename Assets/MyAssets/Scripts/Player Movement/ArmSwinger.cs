@@ -8,7 +8,9 @@ public class ArmSwinger : MonoBehaviour
 {
     public XRController leftController, rightController;
     public enum MovementDirectionTypes { HEAD, CONTROLLERS};
-    public MovementDirectionTypes movementDirectionTypes;
+    public MovementDirectionTypes movementDirectionType;
+
+    public float additionalHeight = 0.2f;
 
     private InputDevice leftControllerDevice, rightControllerDevice;
     private XRRig rig; // Get the XRRig to acces to the head (camera) 
@@ -55,12 +57,14 @@ public class ArmSwinger : MonoBehaviour
     }
 
     private void FixedUpdate() {
+        CapsuleFollowHeadset();
+
         Vector3 direction = Vector3.zero;
 
-        if(movementDirectionTypes == MovementDirectionTypes.HEAD) {
+        if(movementDirectionType == MovementDirectionTypes.HEAD) {
             // Move horizontally by head direction
             direction = rig.cameraGameObject.transform.forward.normalized;
-        }else if(movementDirectionTypes == MovementDirectionTypes.CONTROLLERS) {
+        }else if(movementDirectionType == MovementDirectionTypes.CONTROLLERS) {
             // Move horizontally by controllers direction
             direction = (leftController.transform.forward.normalized + rightController.transform.forward.normalized).normalized;
         }
@@ -69,6 +73,14 @@ public class ArmSwinger : MonoBehaviour
 
         // Move vertically
         character.Move(Vector3.up * Physics.gravity.y * Time.fixedDeltaTime);
+    }
+
+    // Para rotar el CharacterCollider(capsule) segun la camara (a donde mire el player) 
+    void CapsuleFollowHeadset() {
+        character.height = rig.cameraInRigSpaceHeight + additionalHeight;
+        // InverseTransformPoint: da la posicion local que tendria el objeto si fuera un hijo de la camara
+        Vector3 capsuleCenter = transform.InverseTransformPoint(rig.cameraGameObject.transform.position);
+        character.center = new Vector3(capsuleCenter.x, character.height / 2 + character.skinWidth, capsuleCenter.z);
     }
 
     void TryInitializeDevice(ref InputDevice device, XRController controller) {
