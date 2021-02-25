@@ -1,38 +1,39 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
-public class ScreenFade : MonoBehaviour {
+public class ImageFader : MonoBehaviour {
 
-    private Texture2D texture;
+    private Image image;
     private float alpha;
 
     private float fadeDuration;
     private bool fadingOut;
     private bool fadingIn;
 
+    private void Awake() {
+        image = GetComponent<Image>();
+    }
+
     private void Start() {
-        texture = new Texture2D(1, 1);
-        texture.SetPixel(0, 0, new Color(0, 0, 0, 0));
-        texture.Apply();
+        image.color = new Color(0, 0, 0, 0);
     }
 
     private void Update() {
         if(fadingOut) {
+            UpdateImageAlphaValue();
             alpha += Time.deltaTime / fadeDuration;
             if(alpha >= 1.0f)
                 fadingOut = false;
         } else if(fadingIn) {
+            UpdateImageAlphaValue();
             alpha -= Time.deltaTime / fadeDuration;
             if(alpha <= 0.0f)
                 fadingIn = false;
         }
     }
 
-    private void OnGUI() {
-        if(fadingOut || fadingIn) {
-            texture.SetPixel(0, 0, new Color(0, 0, 0, alpha));
-            texture.Apply();
-            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), texture);
-        }
+    void UpdateImageAlphaValue() {
+        image.color = new Color(0, 0, 0, alpha);
     }
 
     public void FadeOut(float duration) {

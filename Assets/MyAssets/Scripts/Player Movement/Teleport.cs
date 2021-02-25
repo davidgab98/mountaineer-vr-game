@@ -5,13 +5,14 @@ using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class Teleport : TeleportationProvider {
+
     public enum TeleportTypes { BLINK, SHIFT, SCREENFADE };
     public TeleportTypes teleportType;
 
     public float shiftTeleportSpeed = 30;
 
-    public ScreenFade screenFade;
-    public float screenFadeTeleportDuration = 1f;
+    public float screenFadeTeleportDuration = 0.25f;
+    public ImageFader fader;
     float screenFadeTeleportTime;
 
     private CharacterController character;
@@ -35,34 +36,41 @@ public class Teleport : TeleportationProvider {
     protected override void Update() {
         if(teleporting) {
             if(teleportType == TeleportTypes.SHIFT) {
-                ShiftTeleportStep();
-                if(character.transform.position.Equals(teleportDestination)) {
-                    teleporting = false;
-                }
+                ShiftTeleport();
             } else if(teleportType == TeleportTypes.SCREENFADE) {
                 ScreenFadeTeleport();
-            } else { // BLINK
-                character.transform.position = teleportDestination;
-                teleporting = false;
+            } else { 
+                BlinkTeleport();
             }
         }
     }
 
+    void BlinkTeleport() {
+        character.transform.position = teleportDestination;
+        teleporting = false;
+    }
+
     void ScreenFadeTeleport() {
-        screenFade.FadeOut(screenFadeTeleportDuration);
+        fader.FadeOut(screenFadeTeleportDuration);
+
         screenFadeTeleportTime += Time.deltaTime;
         if(screenFadeTeleportTime >= screenFadeTeleportDuration) {
+
             character.transform.position = teleportDestination;
-            screenFade.FadeIn(0.25f);
+            fader.FadeIn(screenFadeTeleportDuration);
 
             teleporting = false;
             screenFadeTeleportTime = 0;
         }
     }
 
-    void ShiftTeleportStep() {
+    void ShiftTeleport() {
         float step = shiftTeleportSpeed * Time.deltaTime;
         character.transform.position = Vector3.MoveTowards(character.transform.position, teleportDestination, step);
+
+        if(character.transform.position.Equals(teleportDestination)) {
+            teleporting = false;
+        }
     }
 
 
