@@ -7,7 +7,12 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class Teleport : TeleportationProvider {
     public enum TeleportTypes { BLINK, SHIFT, SCREENFADE };
     public TeleportTypes teleportType;
+
     public float shiftTeleportSpeed = 30;
+
+    public ScreenFade screenFade;
+    public float screenFadeTeleportDuration = 1f;
+    float screenFadeTeleportTime;
 
     private CharacterController character;
     private Vector3 teleportDestination;
@@ -30,12 +35,12 @@ public class Teleport : TeleportationProvider {
     protected override void Update() {
         if(teleporting) {
             if(teleportType == TeleportTypes.SHIFT) {
-                ShiftTeleport();
+                ShiftTeleportStep();
                 if(character.transform.position.Equals(teleportDestination)) {
                     teleporting = false;
                 }
             } else if(teleportType == TeleportTypes.SCREENFADE) {
-
+                ScreenFadeTeleport();
             } else { // BLINK
                 character.transform.position = teleportDestination;
                 teleporting = false;
@@ -43,7 +48,19 @@ public class Teleport : TeleportationProvider {
         }
     }
 
-    void ShiftTeleport() {
+    void ScreenFadeTeleport() {
+        screenFade.FadeOut(screenFadeTeleportDuration);
+        screenFadeTeleportTime += Time.deltaTime;
+        if(screenFadeTeleportTime >= screenFadeTeleportDuration) {
+            character.transform.position = teleportDestination;
+            screenFade.FadeIn(0.25f);
+
+            teleporting = false;
+            screenFadeTeleportTime = 0;
+        }
+    }
+
+    void ShiftTeleportStep() {
         float step = shiftTeleportSpeed * Time.deltaTime;
         character.transform.position = Vector3.MoveTowards(character.transform.position, teleportDestination, step);
     }
