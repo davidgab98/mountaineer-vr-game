@@ -6,18 +6,17 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Climber : MonoBehaviour
 {
-    private CharacterController character;
-    public  static XRController climbingHand;
-    private ContinuousMovement  continuousMovement;
+    private CharacterController character; 
+    public static XRController climbingLeftHand, climbingRightHand; 
+    private ContinuousMovement continuousMovement; 
 
     void Start() {
-        character          = GetComponent<CharacterController>();
+        character = GetComponent<CharacterController>();
         continuousMovement = GetComponent<ContinuousMovement>();
     }
 
-    void FixedUpdate()
-    {
-        if(climbingHand) {
+    void FixedUpdate() {
+        if(climbingLeftHand || climbingRightHand) {
             continuousMovement.enabled = false;
             Climb();
         } else {
@@ -26,12 +25,18 @@ public class Climber : MonoBehaviour
     }
 
     //Climbing Computations
-    void Climb() 
-    {
-        //Cogemos el Device a partir del XRController y leemos su velocidad (la del device) escribiendola en la salida: out vector3 velocity
-        InputDevices.GetDeviceAtXRNode(climbingHand.controllerNode).TryGetFeatureValue(CommonUsages.deviceVelocity, out Vector3 velocity);
+    void Climb() {
+        Vector3 impulseVelocity = Vector3.zero;
 
-        //Movemos al player con la velocidad contraria a la de la mano (importante multiplicar por la rotación del player)
-        character.Move(transform.rotation * -velocity * Time.fixedDeltaTime);
+        if(climbingLeftHand && InputDevices.GetDeviceAtXRNode(climbingLeftHand.controllerNode).TryGetFeatureValue(CommonUsages.deviceVelocity, out Vector3 leftHandVelocity)) {
+            impulseVelocity += leftHandVelocity;
+        }
+        if(climbingRightHand && InputDevices.GetDeviceAtXRNode(climbingRightHand.controllerNode).TryGetFeatureValue(CommonUsages.deviceVelocity, out Vector3 rightHandVelocity)) {
+            impulseVelocity += rightHandVelocity;
+        }
+
+        character.Move(transform.rotation * -impulseVelocity * Time.fixedDeltaTime);
+
     }
+
 }
