@@ -20,9 +20,9 @@ public class XRClimbInteractable : XRBaseInteractable
         base.OnSelectExited(interactor);
 
         if(interactor is XRDirectInteractor) {
-            if(interactor.CompareTag("LeftHand") && Climber.climbingLeftHand) {
+            if(Climber.climbingLeftHand && interactor.CompareTag("LeftHand")) {
                 Climber.climbingLeftHand = null;
-            } else if(interactor.CompareTag("RightHand") && Climber.climbingRightHand) {
+            } else if(Climber.climbingRightHand && interactor.CompareTag("RightHand")) {
                 Climber.climbingRightHand = null;
             }
         }

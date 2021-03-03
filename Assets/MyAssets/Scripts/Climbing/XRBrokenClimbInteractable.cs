@@ -29,21 +29,21 @@ public class XRBrokenClimbInteractable : XRBaseInteractable {
         if(hasBeenGrabbed) {
             timeGrabbed += Time.deltaTime;
             if(timeGrabbed >= lifeDuration) {
-                Destroy(this); //Destruimos este componente
+                Break();
             }
         }
     }
 
-    protected override void OnDestroy() {
+    void Break() {
         if(selectingInteractor) {
             DeselectClimbingInteractor(selectingInteractor);
         }
-        
+
         //Dejamos que el objeto caiga
         transform.parent = null; //Eliminamos al padre para evitar deformaciones cuando se vea afectado por la gravedad
         GetComponent<Rigidbody>().isKinematic = false;
 
-        base.OnDestroy();
+        Destroy(this); //Destruimos este componente
     }
 
 
