@@ -70,9 +70,6 @@ public class ArmSwinger : MonoBehaviour
         }
 
         character.Move(direction * Time.fixedDeltaTime * speed);
-
-        // Move vertically
-        character.Move(Vector3.up * Physics.gravity.y * Time.fixedDeltaTime);
     }
 
     // Para rotar el CharacterCollider(capsule) segun la camara (a donde mire el player) 
