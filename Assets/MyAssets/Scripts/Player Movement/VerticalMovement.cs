@@ -6,12 +6,23 @@ public class VerticalMovement : MonoBehaviour {
 
     public float gravity = -9.81f;
     public LayerMask groundLayer;
+    public GameObject velocityParticles;
+    public float minFallSpeedForEffects = 20;
 
     private float fallingSpeed;
     private CharacterController character;
 
+
     void Start() {
         character = GetComponent<CharacterController>();
+    }
+
+    private void Update() {
+        if(fallingSpeed <= minFallSpeedForEffects) {
+            velocityParticles.SetActive(true);
+        } else {
+            velocityParticles.SetActive(false);
+        }
     }
 
     private void FixedUpdate() {
@@ -25,7 +36,9 @@ public class VerticalMovement : MonoBehaviour {
             fallingSpeed = 0; // Si estamos tocando el suelo, ponemos la velocidad de caida a 0, no caemos
         else
             fallingSpeed += gravity * Time.fixedDeltaTime; // Si no estamos tocando el suelo aumentamos la velocidad de caida con la gravedad
-        
+
+        Debug.Log(fallingSpeed);
+
         character.Move(Vector3.up * fallingSpeed * Time.fixedDeltaTime); // Esto podria hacerse solo cuando isGrounded es false y nos ahorrariamos hacerlo cada vezs
     }
 
