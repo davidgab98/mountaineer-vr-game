@@ -6,10 +6,10 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Climber : MonoBehaviour
 {
-    private CharacterController character; 
     public static XRController climbingLeftHand, climbingRightHand; 
+    private CharacterController character; 
     private ContinuousMovement continuousMovement; 
-    private VerticalMovement verticalMovement;
+    private VerticalMovement verticalMovement; 
 
     void Start() {
         character = GetComponent<CharacterController>();
@@ -20,11 +20,11 @@ public class Climber : MonoBehaviour
     void FixedUpdate() {
         if(climbingLeftHand || climbingRightHand) {
             continuousMovement.enabled = false;
-            verticalMovement.enabled = false;
+            verticalMovement.blockedFall = true;
             Climb();
         } else {
             continuousMovement.enabled = true;
-            verticalMovement.enabled = true;
+            verticalMovement.blockedFall = false;
         }
     }
 
@@ -40,7 +40,5 @@ public class Climber : MonoBehaviour
         }
 
         character.Move(transform.rotation * -impulseVelocity * Time.fixedDeltaTime);
-
     }
-
 }

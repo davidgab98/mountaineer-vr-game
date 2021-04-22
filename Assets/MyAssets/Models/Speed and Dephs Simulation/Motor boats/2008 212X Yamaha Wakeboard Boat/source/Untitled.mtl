@@ -1,0 +1,29 @@
+# MTL written from C:\Users\User\Desktop\Untitled.obj
+newmtl Glass
+Kd 0.6 0.6 0.6
+Ns 4096
+d 1
+illum 2
+Ka 0 0 0
+Ks 0 0 0
+newmtl Mirror
+Kd 0.6 0.6 0.6
+Ns 4096
+d 1
+illum 2
+Ka 0 0 0
+Ks 0 0 0
+newmtl Yamaha_Alphas
+Kd 0.6 0.6 0.6
+Ns 4096
+d 1
+illum 2
+Ka 0 0 0
+Ks 0 0 0
+newmtl Yamaha_Base
+Kd 0.6 0.6 0.6
+Ns 4096
+d 1
+illum 2
+Ka 0 0 0
+Ks 0 0 0

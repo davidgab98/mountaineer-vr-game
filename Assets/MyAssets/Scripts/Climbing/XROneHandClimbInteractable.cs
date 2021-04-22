@@ -6,9 +6,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 /*
  * La funcion que cumple este componente es permitir la escalada (Componente Climber del VRRig) evitando que el propio componente Interactable (this) pueda
  * ser intercambiado de mano cuando ya esta siendo agarrado con un interactor. Esto por si solo no tiene demasiadas aplicaciones practicas ( al menos que haya 
- * encontrado), pero si se combina con otro LockHandClimbInteractable situado en la misma posicion, conseguiremos como resultado dar la impresion de que el objeto 3D
+ * encontrado), pero si se combina con otro OneHandClimbInteractable situado en la misma posicion, conseguiremos como resultado dar la impresion de que el objeto 3D
  * sobre el que esten estos Interactables, puede ser agarrado por ambas manos, siendo en realidad una falsa ilusión, pues lo que estaremos haciendo es agarrar con cada
- * mano un LockHandClimbInteractable distinto.
+ * mano un OneHandClimbInteractable distinto.
  */
 
 public class XROneHandClimbInteractable : XRBaseInteractable {

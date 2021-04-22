@@ -6,23 +6,18 @@ public class VerticalMovement : MonoBehaviour {
 
     public float gravity = -9.81f;
     public LayerMask groundLayer;
-    public GameObject velocityParticles;
-    public float minFallSpeedForEffects = 20;
 
-    private float fallingSpeed;
+    public float fallingSpeed;
+    public bool blockedFall;
+    public bool isGrounded;
+
     private CharacterController character;
+    private PlayerLifeController lifeController;
 
 
-    void Start() {
+    void Awake() {
         character = GetComponent<CharacterController>();
-    }
-
-    private void Update() {
-        if(fallingSpeed <= minFallSpeedForEffects) {
-            velocityParticles.SetActive(true);
-        } else {
-            velocityParticles.SetActive(false);
-        }
+        lifeController = GetComponent<PlayerLifeController>();
     }
 
     private void FixedUpdate() {
@@ -31,13 +26,15 @@ public class VerticalMovement : MonoBehaviour {
         // Move vertically
         // De esta forma solo aplicamos fuerza negativa hacia abajo cuando CheckIfGrounded = false (no estemos tocando el suelo: gameobjects con layer=Ground)
         // Puede dar problemas derivados de la longitud del rayCast que usamos para calcular si estamos tocando el suelo o no, pero da mucho más juego
-        bool isGrounded = CheckIfGrounded();
-        if(isGrounded)
-            fallingSpeed = 0; // Si estamos tocando el suelo, ponemos la velocidad de caida a 0, no caemos
-        else
-            fallingSpeed += gravity * Time.fixedDeltaTime; // Si no estamos tocando el suelo aumentamos la velocidad de caida con la gravedad
+        isGrounded = CheckIfGrounded();
+        if(isGrounded) {
+            if(Mathf.Abs(fallingSpeed) > 0) // Si la velocidad de caida es mayor que 0, hemos golpeado contra el suelo
+                HitTheGround();
 
-        Debug.Log(fallingSpeed);
+            fallingSpeed = 0; // Si estamos tocando el suelo, ponemos la velocidad de caida a 0, no caemos
+        } else if(!blockedFall) { //Si la caída no esta bloqueada (podria estar bloqueada por ejemplo por Climber)
+            fallingSpeed += gravity * Time.fixedDeltaTime; // Si no estamos tocando el suelo aumentamos la velocidad de caida con la gravedad
+        }
 
         character.Move(Vector3.up * fallingSpeed * Time.fixedDeltaTime); // Esto podria hacerse solo cuando isGrounded es false y nos ahorrariamos hacerlo cada vezs
     }
@@ -53,5 +50,11 @@ public class VerticalMovement : MonoBehaviour {
         // Creamos el sphereCast y guardamos en hasHit si colisiona o no con groundLayer
         bool hasHit = Physics.SphereCast(rayStart, character.radius, Vector3.down, out RaycastHit hitInfo, rayLenght, groundLayer);
         return hasHit;
+    }
+
+    private void HitTheGround() {
+        if(Mathf.Abs(fallingSpeed) > 10) {
+            lifeController.SubtractLife(Mathf.Abs(fallingSpeed));
+        }
     }
 }

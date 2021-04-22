@@ -29,7 +29,6 @@ public class Teleport : TeleportationProvider {
             teleporting = true;
             return true;
         }
-
         return false;
     }
 
