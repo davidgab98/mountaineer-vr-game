@@ -13,7 +13,7 @@ public class SkyboxController : MonoBehaviour
 
     void Update()
     {
-        skybox.SetFloat("_Rotation", skybox.GetFloat("_Rotation") + Time.deltaTime * rotationSkyboxSpeed);
+        //skybox.SetFloat("_Rotation", skybox.GetFloat("_Rotation") + Time.deltaTime * rotationSkyboxSpeed);
 
     }
 }
