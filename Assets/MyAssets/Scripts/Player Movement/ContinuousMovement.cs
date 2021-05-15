@@ -14,9 +14,11 @@ public class ContinuousMovement : MonoBehaviour {
     private Vector2 inputAxis; //Update by primary2dAxis
     private bool running; //true if Primary2DAxisClick is clicked
     private CharacterController character;
+    private VerticalMovement vm;
 
     void Start() {
         character = GetComponent<CharacterController>();
+        vm = GetComponent<VerticalMovement>();
         rig = GetComponent<XRRig>();
     }
 
@@ -41,6 +43,13 @@ public class ContinuousMovement : MonoBehaviour {
             character.Move(direction * Time.fixedDeltaTime * walkingSpeed);
         else
             character.Move(direction * Time.fixedDeltaTime * runningSpeed);
+
+        if(character.velocity.magnitude > 2 && vm.isGrounded) {
+            if(!running)
+                FindObjectOfType<AudioManager>().PlayVariableSound("StepSnowWalk");
+            else
+                FindObjectOfType<AudioManager>().PlayVariableSound("StepSnowRun");
+        }
     }
 
     // Para rotar el CharacterCollider(capsule) segun la camara (a donde mire el player) 

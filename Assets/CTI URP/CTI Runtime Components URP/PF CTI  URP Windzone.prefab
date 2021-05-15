@@ -58,4 +58,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897a09e95f3c16049a601ce6e13e5caa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WindMultiplier: 2
+  WindMultiplier: 1.4

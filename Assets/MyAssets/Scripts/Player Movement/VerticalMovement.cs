@@ -10,10 +10,10 @@ public class VerticalMovement : MonoBehaviour {
     public float fallingSpeed;
     public bool blockedFall;
     public bool isGrounded;
+    public LayerMask currentLayerHitting;
 
     private CharacterController character;
     private PlayerLifeController lifeController;
-
 
     void Awake() {
         character = GetComponent<CharacterController>();
@@ -49,11 +49,16 @@ public class VerticalMovement : MonoBehaviour {
 
         // Creamos el sphereCast y guardamos en hasHit si colisiona o no con groundLayer
         bool hasHit = Physics.SphereCast(rayStart, character.radius, Vector3.down, out RaycastHit hitInfo, rayLenght, groundLayer);
+        if(hasHit) {
+            currentLayerHitting = hitInfo.collider.gameObject.layer;
+        }
+        
         return hasHit;
     }
 
     private void HitTheGround() {
-        if(Mathf.Abs(fallingSpeed) > 10) {
+        if(Mathf.Abs(fallingSpeed) > 15) {
+            FindObjectOfType<AudioManager>().PlaySound("FallHit");
             lifeController.SubtractLife(Mathf.Abs(fallingSpeed));
         }
     }

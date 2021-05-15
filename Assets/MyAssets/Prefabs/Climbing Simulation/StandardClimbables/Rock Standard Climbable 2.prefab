@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8801309465534279877}
   - component: {fileID: 7866480489730003710}
   - component: {fileID: 131640335828766390}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Rock Standard Climbable 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

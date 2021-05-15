@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1427114931641301623}
   - component: {fileID: 8101725540549848569}
   - component: {fileID: 3391068598772289031}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Rock Standard Climbable 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2165379082348983461}
   - component: {fileID: 1025048724223575495}
   - component: {fileID: 2303738403611085412}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Rock Standard Climbable 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,13 +28,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5033491799804945872}
-  m_LocalRotation: {x: -0.6978552, y: 0.11400874, z: -0.11400888, w: 0.6978555}
+  m_LocalRotation: {x: -0.6160473, y: 0.3471105, z: -0.3471108, w: 0.6160472}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.21718368, y: 0.21718374, z: 0.21718374}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -108.557, y: -90, z: 89.99999}
+  m_LocalEulerAnglesHint: {x: -148.798, y: -90, z: 89.99999}
 --- !u!33 &6071621530019948580
 MeshFilter:
   m_ObjectHideFlags: 0
