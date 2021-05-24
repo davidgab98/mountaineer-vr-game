@@ -5,7 +5,7 @@ using UnityEngine;
 public class VerticalMovement : MonoBehaviour {
 
     public float gravity = -9.81f;
-    public LayerMask groundLayer;
+    public List<LayerMask> groundLayers;
 
     public float fallingSpeed;
     public bool blockedFall;
@@ -36,7 +36,9 @@ public class VerticalMovement : MonoBehaviour {
             fallingSpeed += gravity * Time.fixedDeltaTime; // Si no estamos tocando el suelo aumentamos la velocidad de caida con la gravedad
         }
 
-        character.Move(Vector3.up * fallingSpeed * Time.fixedDeltaTime); // Esto podria hacerse solo cuando isGrounded es false y nos ahorrariamos hacerlo cada vezs
+        character.Move(Vector3.up * fallingSpeed * Time.fixedDeltaTime); // Esto podria hacerse solo cuando isGrounded es false y nos ahorrariamos hacerlo cada vez
+
+
     }
 
     private bool CheckIfGrounded() {
@@ -47,10 +49,17 @@ public class VerticalMovement : MonoBehaviour {
         Vector3 rayStart = transform.TransformPoint(character.center);
         float rayLenght = character.center.y + 0.1f;
 
-        // Creamos el sphereCast y guardamos en hasHit si colisiona o no con groundLayer
-        bool hasHit = Physics.SphereCast(rayStart, character.radius, Vector3.down, out RaycastHit hitInfo, rayLenght, groundLayer);
-        if(hasHit) {
-            currentLayerHitting = hitInfo.collider.gameObject.layer;
+        bool hasHit = false;
+        for(int i = 0; i < groundLayers.Count && !hasHit; i++) {
+            // Creamos el sphereCast y guardamos en hasHit si colisiona o no con groundLayer
+            hasHit = Physics.SphereCast(rayStart, character.radius, Vector3.down, out RaycastHit hitInfo, rayLenght, groundLayers[i]);
+            if(hasHit) {
+                currentLayerHitting = hitInfo.collider.gameObject.layer;
+            }
+        }
+
+        if(!hasHit) {
+            currentLayerHitting = default;
         }
         
         return hasHit;

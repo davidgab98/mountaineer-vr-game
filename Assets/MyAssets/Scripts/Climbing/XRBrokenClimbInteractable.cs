@@ -43,6 +43,8 @@ public class XRBrokenClimbInteractable : XRBaseInteractable {
         transform.parent = null; //Eliminamos al padre para evitar deformaciones cuando se vea afectado por la gravedad
         GetComponent<Rigidbody>().isKinematic = false;
 
+        FindObjectOfType<AudioManager>().PlayVariableSound("BrokenRockFalling");
+
         Destroy(this); //Destruimos este componente
     }
 

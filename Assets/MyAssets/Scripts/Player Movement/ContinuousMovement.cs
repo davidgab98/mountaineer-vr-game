@@ -45,10 +45,23 @@ public class ContinuousMovement : MonoBehaviour {
             character.Move(direction * Time.fixedDeltaTime * runningSpeed);
 
         if(character.velocity.magnitude > 2 && vm.isGrounded) {
-            if(!running)
+            WalkWithSound();
+        }
+    }
+
+    private void WalkWithSound() {
+        if(!running) {
+            if(vm.currentLayerHitting == LayerMask.NameToLayer("Ground")){
                 FindObjectOfType<AudioManager>().PlayVariableSound("StepSnowWalk");
-            else
+            } else if(vm.currentLayerHitting == LayerMask.NameToLayer("GroundWood")) {
+                FindObjectOfType<AudioManager>().PlaySerialSound("StepWoodWalk");
+            }
+        } else {
+            if(vm.currentLayerHitting == LayerMask.NameToLayer("Ground")) {
                 FindObjectOfType<AudioManager>().PlayVariableSound("StepSnowRun");
+            } else if(vm.currentLayerHitting == LayerMask.NameToLayer("GroundWood")) {
+                FindObjectOfType<AudioManager>().PlaySerialSound("StepWoodWalk");
+            }
         }
     }
 

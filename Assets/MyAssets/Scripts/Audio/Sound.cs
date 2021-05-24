@@ -1,11 +1,14 @@
 ﻿using UnityEngine.Audio;
 using UnityEngine;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class Sound
 {
     public string name;
-    public AudioClip clip;
+    public List<AudioClip> clips;
+    [HideInInspector]
+    public int currentClip;
 
     public float minVolume;
     public float maxVolume;
@@ -13,6 +16,7 @@ public class Sound
     public float maxPitch;
 
     public bool loop;
+
 
     [HideInInspector]
     public AudioSource source;
