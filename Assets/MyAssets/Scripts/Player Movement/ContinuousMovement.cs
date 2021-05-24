@@ -16,7 +16,7 @@ public class ContinuousMovement : MonoBehaviour {
     private CharacterController character;
     private VerticalMovement vm;
 
-    void Start() {
+    void Awake() {
         character = GetComponent<CharacterController>();
         vm = GetComponent<VerticalMovement>();
         rig = GetComponent<XRRig>();

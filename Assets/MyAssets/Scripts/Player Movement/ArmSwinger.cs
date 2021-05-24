@@ -7,7 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class ArmSwinger : MonoBehaviour
 {
     public XRController leftController, rightController;
-    public enum MovementDirectionTypes { HEAD, CONTROLLERS};
+    public enum MovementDirectionTypes {HEAD, CONTROLLERS};
     public MovementDirectionTypes movementDirectionType;
 
     public float additionalHeight = 0.2f;
@@ -15,13 +15,17 @@ public class ArmSwinger : MonoBehaviour
     private InputDevice leftControllerDevice, rightControllerDevice;
     private XRRig rig; // Get the XRRig to acces to the head (camera) 
     private CharacterController character;
+    private VerticalMovement vm;
 
     private float speed;
 
-    private void Start() {
+    private void Awake() {
         character = GetComponent<CharacterController>();
+        vm = GetComponent<VerticalMovement>();
         rig = GetComponent<XRRig>();
+    }
 
+    private void Start() {
         TryInitializeDevice(ref leftControllerDevice, leftController);
         TryInitializeDevice(ref rightControllerDevice, rightController);
     }
@@ -70,6 +74,18 @@ public class ArmSwinger : MonoBehaviour
         }
 
         character.Move(direction * Time.fixedDeltaTime * speed);
+
+        if(character.velocity.magnitude > 2 && vm.isGrounded) {
+            WalkWithSound();
+        }
+    }
+
+    private void WalkWithSound() {
+        if(vm.currentLayerHitting == LayerMask.NameToLayer("Ground")) {
+            FindObjectOfType<AudioManager>().PlayVariableSound("StepSnowWalk");
+        } else if(vm.currentLayerHitting == LayerMask.NameToLayer("GroundWood")) {
+            FindObjectOfType<AudioManager>().PlaySerialSound("StepWoodWalk");
+        }
     }
 
     // Para rotar el CharacterCollider(capsule) segun la camara (a donde mire el player) 

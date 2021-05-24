@@ -22,10 +22,10 @@ public class XRSocketInteractorHelmet : XRSocketInteractor
     }
 
     protected override void OnSelectExited(XRBaseInteractable interactable) {
-        base.OnSelectExited(interactable);
-
-        if(interactable.CompareTag("ClimbingHelmet")) {
+        if(interactable && interactable.CompareTag("ClimbingHelmet")) {
             lifeController.UpdateMaxLife(100);
         }
+
+        base.OnSelectExited(interactable);
     }
 }

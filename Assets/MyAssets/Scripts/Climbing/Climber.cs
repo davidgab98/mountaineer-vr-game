@@ -9,22 +9,26 @@ public class Climber : MonoBehaviour
     public static XRController climbingLeftHand, climbingRightHand; 
     private CharacterController character; 
     private ContinuousMovement continuousMovement; 
+    private ArmSwinger armSwinger;
     private VerticalMovement verticalMovement; 
 
     void Start() {
-        character = GetComponent<CharacterController>();
-        continuousMovement = GetComponent<ContinuousMovement>();
-        verticalMovement = GetComponent<VerticalMovement>();
+        character = GetComponent<CharacterController>(); 
+        continuousMovement = GetComponent<ContinuousMovement>(); 
+        armSwinger = GetComponent<ArmSwinger>(); 
+        verticalMovement = GetComponent<VerticalMovement>(); 
     }
 
     void FixedUpdate() {
         if(climbingLeftHand || climbingRightHand) {
-            continuousMovement.enabled = false;
-            verticalMovement.blockedFall = true;
+            continuousMovement.enabled = false; 
+            armSwinger.enabled = false; 
+            verticalMovement.blockedFall = true; 
             Climb();
         } else {
-            continuousMovement.enabled = true;
-            verticalMovement.blockedFall = false;
+            continuousMovement.enabled = true; 
+            armSwinger.enabled = true; 
+            verticalMovement.blockedFall = false; 
         }
     }
 
