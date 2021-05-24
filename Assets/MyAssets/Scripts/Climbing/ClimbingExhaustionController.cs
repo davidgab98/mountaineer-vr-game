@@ -6,7 +6,9 @@ public class ClimbingExhaustionController : MonoBehaviour {
     private VerticalMovement verticalMovement;
 
     [SerializeField]
-    private float maxClimbingExhaustionTime = 10;
+    private float maxClimbingExhaustionTime = 65;
+    [SerializeField]
+    private float minTimeToHiperventilate = 15;
     [SerializeField]
     private float timeOffTheGround;
 
@@ -14,16 +16,35 @@ public class ClimbingExhaustionController : MonoBehaviour {
         verticalMovement = GetComponent<VerticalMovement>();
     }
 
-    // Update is called once per frame
     void Update() {
-        if(!verticalMovement.isGrounded) {
+        if(Climber.climbingLeftHand != null || Climber.climbingRightHand != null) {
             timeOffTheGround += Time.deltaTime;
+            if(timeOffTheGround >= minTimeToHiperventilate) {
+                FindObjectOfType<AudioManager>().PlaySound("Hiperventilate");
+            }
             if(timeOffTheGround >= maxClimbingExhaustionTime) {
                 Climber.climbingLeftHand = null;
                 Climber.climbingRightHand = null;
             }
         } else {
             timeOffTheGround = 0;
+            FindObjectOfType<AudioManager>().StopSound("Hiperventilate");
         }
     }
+
+    /*
+        if(!verticalMovement.isGrounded) {
+            timeOffTheGround += Time.deltaTime;
+            if(timeOffTheGround >= minTimeToHiperventilate) {
+                FindObjectOfType<AudioManager>().PlaySound("Hiperventilate");
+            }
+            if(timeOffTheGround >= maxClimbingExhaustionTime) {
+                Climber.climbingLeftHand = null;
+                Climber.climbingRightHand = null;
+            }
+        } else {
+            timeOffTheGround = 0;
+            FindObjectOfType<AudioManager>().StopSound("Hiperventilate");
+        }
+    }*/
 }
