@@ -5,9 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/DemoDefaultAssetsURP/Scenes/SampleScene.unity
+  - enabled: 0
+    path: Assets/Fallen Tree Barrier - FREE/DemoDefaultAssetsURP/Scenes/SampleScene.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/MyAssets/Scenes/SandBox.unity
+    guid: 32c24b8da7af2f74ab06fb24f86ae771
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: f9c7f36c9f6c4704cb9d5926c213027f,
       type: 2}

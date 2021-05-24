@@ -34,6 +34,7 @@ Transform:
   m_Children:
   - {fileID: 660247918185247225}
   - {fileID: 3476395697892841624}
+  - {fileID: 6968094566154228832}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -107,8 +108,8 @@ MonoBehaviour:
       m_Calls: []
   m_CustomReticle: {fileID: 0}
   m_AttachTransform: {fileID: 3476395697892841624}
-  m_AttachEaseInTime: 0.15
-  m_MovementType: 1
+  m_AttachEaseInTime: 0.4
+  m_MovementType: 2
   m_TrackPosition: 1
   m_SmoothPosition: 0
   m_SmoothPositionAmount: 5
@@ -164,6 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 2769066626537655051, guid: 60203532e8bb27944a3b913fe914bb3f, type: 3}
+  barrel: {fileID: 6968094566154228832}
   audioSource: {fileID: 4263263283015052653}
   audioClip: {fileID: 0}
 --- !u!82 &4263263283015052653
@@ -292,6 +294,36 @@ Transform:
   m_Father: {fileID: 97284554574938273}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 10.059, y: 0, z: 0}
+--- !u!1 &1670237512928211015
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6968094566154228832}
+  m_Layer: 8
+  m_Name: Barrel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6968094566154228832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670237512928211015}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.1, z: 2.65}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 97284554574938273}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8619753921373627074
 GameObject:
   m_ObjectHideFlags: 0

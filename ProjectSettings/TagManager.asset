@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - LeftHand
+  - RightHand
+  - ClimbingHelmet
+  - RopePart
+  - Terrain
   layers:
   - Default
   - TransparentFX
@@ -17,8 +22,8 @@ TagManager:
   - Ground
   - Body
   - Grab Ignore Ray
-  - 
-  - 
+  - Second Hand Grab
+  - GroundWood
   - 
   - 
   - 
