@@ -66,7 +66,7 @@ MeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 0.5568417
   m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
@@ -216,7 +216,7 @@ BillboardRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 0.3640174
   m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
@@ -280,11 +280,11 @@ LODGroup:
   m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.5459835
+  - screenRelativeHeight: 0.6042969
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 23933673824694470}
-  - screenRelativeHeight: 0.3640174
+  - screenRelativeHeight: 0.39941064
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 23309444090733188}
