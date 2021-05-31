@@ -46,6 +46,9 @@ public class ArmSwinger : MonoBehaviour
             if(CheckButtonToWalk(rightControllerDevice))
                 speed += Mathf.Abs(GetDeviceVelocity(rightControllerDevice).y);
         }
+
+        if(speed > 0)
+            speed += 2f;
     }
 
     bool CheckButtonToWalk(InputDevice device) {
@@ -73,6 +76,7 @@ public class ArmSwinger : MonoBehaviour
             direction = (leftController.transform.forward.normalized + rightController.transform.forward.normalized).normalized;
         }
 
+        Debug.Log(speed);
         character.Move(direction * Time.fixedDeltaTime * speed);
 
         if(character.velocity.magnitude > 2 && vm.isGrounded) {
@@ -84,7 +88,7 @@ public class ArmSwinger : MonoBehaviour
         if(vm.currentLayerHitting == LayerMask.NameToLayer("Ground")) {
             FindObjectOfType<AudioManager>().PlayVariableSound("StepSnowWalk");
         } else if(vm.currentLayerHitting == LayerMask.NameToLayer("GroundWood")) {
-            FindObjectOfType<AudioManager>().PlaySerialSound("StepWoodWalk");
+            FindObjectOfType<AudioManager>().PlaySerialVariableSound("StepWoodWalk");
         }
     }
 

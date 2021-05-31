@@ -11,8 +11,10 @@ public class Teleport : TeleportationProvider {
 
     public float shiftTeleportSpeed = 30;
 
-    public float screenFadeTeleportDuration = 0.25f;
-    public ImageFader fader;
+    [SerializeField]
+    private float screenFadeTeleportDuration = 0.25f;
+    [SerializeField]
+    private ImageFader fader;
     float screenFadeTeleportTime;
 
     private CharacterController character;
@@ -26,6 +28,7 @@ public class Teleport : TeleportationProvider {
     public override bool QueueTeleportRequest(TeleportRequest teleportRequest) {
         if(!teleporting) {
             teleportDestination = teleportRequest.destinationPosition;
+            
             teleporting = true;
             return true;
         }
