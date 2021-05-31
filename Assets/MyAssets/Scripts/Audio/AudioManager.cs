@@ -46,6 +46,23 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlaySerialVariableSound(string name) {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if(s != null && !s.source.isPlaying) {
+            s.source.volume = UnityEngine.Random.Range(s.minVolume, s.maxVolume);
+            s.source.pitch = UnityEngine.Random.Range(s.minPitch, s.maxPitch);
+            s.source.clip = s.clips[s.currentClip];
+            s.currentClip++;
+            if(s.currentClip >= s.clips.Count)
+                s.currentClip = 0;
+
+            s.source.Play();
+        } else {
+            Debug.LogWarning("Sound: " + name + " not found!");
+            return;
+        }
+    }
+
     public void PlaySound(string name) {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if(s != null && !s.source.isPlaying){

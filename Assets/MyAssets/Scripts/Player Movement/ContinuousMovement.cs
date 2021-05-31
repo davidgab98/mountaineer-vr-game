@@ -54,13 +54,13 @@ public class ContinuousMovement : MonoBehaviour {
             if(vm.currentLayerHitting == LayerMask.NameToLayer("Ground")){
                 FindObjectOfType<AudioManager>().PlayVariableSound("StepSnowWalk");
             } else if(vm.currentLayerHitting == LayerMask.NameToLayer("GroundWood")) {
-                FindObjectOfType<AudioManager>().PlaySerialSound("StepWoodWalk");
+                FindObjectOfType<AudioManager>().PlaySerialVariableSound("StepWoodWalk");
             }
         } else {
             if(vm.currentLayerHitting == LayerMask.NameToLayer("Ground")) {
                 FindObjectOfType<AudioManager>().PlayVariableSound("StepSnowRun");
             } else if(vm.currentLayerHitting == LayerMask.NameToLayer("GroundWood")) {
-                FindObjectOfType<AudioManager>().PlaySerialSound("StepWoodWalk");
+                FindObjectOfType<AudioManager>().PlaySerialVariableSound("StepWoodWalk");
             }
         }
     }

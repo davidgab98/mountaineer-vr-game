@@ -23,7 +23,7 @@ public class Climber : MonoBehaviour
         if(climbingLeftHand || climbingRightHand) {
             continuousMovement.enabled = false; 
             armSwinger.enabled = false; 
-            verticalMovement.blockedFall = true; 
+            verticalMovement.blockedFall = true;
             Climb();
         } else {
             continuousMovement.enabled = true; 

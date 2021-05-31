@@ -34,11 +34,8 @@ public class VerticalMovement : MonoBehaviour {
             fallingSpeed = 0; // Si estamos tocando el suelo, ponemos la velocidad de caida a 0, no caemos
         } else if(!blockedFall) { //Si la caída no esta bloqueada (podria estar bloqueada por ejemplo por Climber)
             fallingSpeed += gravity * Time.fixedDeltaTime; // Si no estamos tocando el suelo aumentamos la velocidad de caida con la gravedad
+            character.Move(Vector3.up * fallingSpeed * Time.fixedDeltaTime); 
         }
-
-        character.Move(Vector3.up * fallingSpeed * Time.fixedDeltaTime); // Esto podria hacerse solo cuando isGrounded es false y nos ahorrariamos hacerlo cada vez
-
-
     }
 
     private bool CheckIfGrounded() {
@@ -68,7 +65,7 @@ public class VerticalMovement : MonoBehaviour {
     private void HitTheGround() {
         if(Mathf.Abs(fallingSpeed) > 15) {
             FindObjectOfType<AudioManager>().PlaySound("FallHit");
-            lifeController.SubtractLife(Mathf.Abs(fallingSpeed));
+            lifeController.SubtractLife(Mathf.Abs(fallingSpeed * 2.2f));
         }
     }
 }
