@@ -6,7 +6,10 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class ArmSwinger : MonoBehaviour
 {
-    public XRController leftController, rightController;
+    public bool blockedMovement;  
+
+    [SerializeField]
+    private XRController leftController, rightController;
     public enum MovementDirectionTypes {HEAD, CONTROLLERS};
     public MovementDirectionTypes movementDirectionType;
 
@@ -28,6 +31,8 @@ public class ArmSwinger : MonoBehaviour
     private void Start() {
         TryInitializeDevice(ref leftControllerDevice, leftController);
         TryInitializeDevice(ref rightControllerDevice, rightController);
+
+        blockedMovement = true;
     }
 
     private void Update() {
@@ -76,8 +81,8 @@ public class ArmSwinger : MonoBehaviour
             direction = (leftController.transform.forward.normalized + rightController.transform.forward.normalized).normalized;
         }
 
-        Debug.Log(speed);
-        character.Move(direction * Time.fixedDeltaTime * speed);
+        if(!blockedMovement)
+            character.Move(direction * Time.fixedDeltaTime * speed);
 
         if(character.velocity.magnitude > 2 && vm.isGrounded) {
             WalkWithSound();

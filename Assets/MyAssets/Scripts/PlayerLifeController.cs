@@ -59,13 +59,13 @@ public class PlayerLifeController : MonoBehaviour
         }else if(currentLife > maxLife) {
             currentLife = maxLife;
         }else if(currentLife <= 0) {
-            ResurrectAtLastCheckPoint();
+            ResurrectAtLastCheckPoint(); 
         }
 
         grayscaleEffect.hueVsSat.value.MoveKey(0, new Keyframe(0, (currentLife / maxLife) / 2));
     }
 
-    private void ResurrectAtLastCheckPoint() {
+    public void ResurrectAtLastCheckPoint() {
         fader.FadeOut(screenFadingDuration);
 
         character.transform.rotation = new Quaternion(character.transform.rotation.x, character.transform.rotation.y, character.transform.rotation.z + 0.8f * Time.deltaTime, character.transform.rotation.w);
@@ -84,6 +84,5 @@ public class PlayerLifeController : MonoBehaviour
             currentLife = maxLife;
             screenFadingTime = 0;
         }
-
     }
 }
