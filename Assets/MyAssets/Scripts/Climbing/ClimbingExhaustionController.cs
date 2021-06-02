@@ -5,13 +5,13 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 public class ClimbingExhaustionController : MonoBehaviour {
+
     [SerializeField]
-    private float maxClimbingExhaustionTime = 65;
-    [SerializeField]
-    private float minTimeToHiperventilate = 15;
+    private float maxClimbingExhaustionTime = 65; 
+    public float minTimeToHiperventilate = 15; 
+
     [SerializeField]
     private float timeOffTheGround;
-
     private VerticalMovement verticalMovement;
 
     [SerializeField]

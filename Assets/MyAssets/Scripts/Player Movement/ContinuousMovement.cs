@@ -5,6 +5,8 @@ using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class ContinuousMovement : MonoBehaviour {
+    public bool blockedMovement;
+
     public float walkingSpeed = 1;
     public float runningSpeed = 2;
     public XRNode inputSource;
@@ -39,11 +41,13 @@ public class ContinuousMovement : MonoBehaviour {
         Quaternion headY = Quaternion.Euler(0, rig.cameraGameObject.transform.eulerAngles.y, 0); // Get the y rotation of the camera (head) of the xrrig
         Vector3 direction = headY * new Vector3(inputAxis.x, 0, inputAxis.y);  // Multiply the rotation of the head in y by the direction to move, then we move considering where the player is looking
 
-        if(!running)
-            character.Move(direction * Time.fixedDeltaTime * walkingSpeed);
-        else
-            character.Move(direction * Time.fixedDeltaTime * runningSpeed);
-
+        if(!blockedMovement) {
+            if(!running)
+                character.Move(direction * Time.fixedDeltaTime * walkingSpeed);
+            else
+                character.Move(direction * Time.fixedDeltaTime * runningSpeed);
+        }
+        
         if(character.velocity.magnitude > 2 && vm.isGrounded) {
             WalkWithSound();
         }
