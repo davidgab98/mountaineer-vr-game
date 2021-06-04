@@ -74,7 +74,7 @@ public class PlayerLifeController : MonoBehaviour
 
         screenFadingTime += Time.deltaTime;
         if(screenFadingTime >= screenFadingDuration) {
-            character.transform.position = lastCheckPointPosition;
+            character.transform.position = new Vector3(lastCheckPointPosition.x, lastCheckPointPosition.y, lastCheckPointPosition.z - 2f);
             character.transform.rotation = new Quaternion(character.transform.rotation.x, character.transform.rotation.y, 0, character.transform.rotation.w);
 
             fader.FadeIn(screenFadingDuration);

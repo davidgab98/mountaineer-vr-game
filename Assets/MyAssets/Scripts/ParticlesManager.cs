@@ -5,7 +5,12 @@ using UnityEngine;
 public class ParticlesManager : MonoBehaviour {
 
     [SerializeField]
-    public GameObject velocityParticles;
+    private ParticleSystem checkPointFireCircle;
+    [SerializeField]
+    private ParticleSystem checkPointSplash;
+
+    [SerializeField]
+    private GameObject velocityParticles;
 
     [SerializeField]
     public VerticalMovement verticalMovement;
@@ -15,6 +20,18 @@ public class ParticlesManager : MonoBehaviour {
     bool hasScreamed;
 
     void Update() {
+        FallingEffect();
+    }
+
+    public void SetAndPlayCheckPointParticles(Vector3 position) {
+        checkPointFireCircle.transform.position = position;
+        checkPointSplash.transform.position = position;
+
+        checkPointFireCircle.Play();
+        checkPointSplash.Play();
+    }
+
+    private void FallingEffect() {
         if(Mathf.Abs(verticalMovement.fallingSpeed) >= minSpeedForVelocityParticles) {
             if(!hasScreamed) {
                 FindObjectOfType<AudioManager>().PlaySound("FallScream");

@@ -79,7 +79,7 @@ public class MenuController : MonoBehaviour
     }
 
     public void BackToLastCheckPoint() {
-        GetComponent<PlayerLifeController>().ResurrectAtLastCheckPoint();
+        GetComponent<PlayerLifeController>().SubtractLife(150);
 
         CloseMenu();
     }
