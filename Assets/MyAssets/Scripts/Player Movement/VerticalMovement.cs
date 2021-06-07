@@ -65,7 +65,7 @@ public class VerticalMovement : MonoBehaviour {
     private void HitTheGround() {
         if(Mathf.Abs(fallingSpeed) > 15) {
             FindObjectOfType<AudioManager>().PlaySound("FallHit");
-            lifeController.SubtractLife(Mathf.Abs(fallingSpeed * 2.2f));
+            lifeController.SubtractLife(Mathf.Abs(fallingSpeed * 2.2f), true);
         }
     }
 }

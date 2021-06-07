@@ -8,8 +8,6 @@ public class AutoTeleport : MonoBehaviour
     private Vector3 destinationTeleportPosition;
     [SerializeField]
     private Quaternion destinationTeleportRotation;
-    [SerializeField]
-    private ImageFader fader;
 
     private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player")) {

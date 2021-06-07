@@ -14,6 +14,8 @@ public class PlayerLifeController : MonoBehaviour
     [SerializeField]
     private float lifeIncreaseFactor = 4;
 
+    private bool canDie;
+
 
     public static Vector3 lastCheckPointPosition;
     [SerializeField]
@@ -40,10 +42,14 @@ public class PlayerLifeController : MonoBehaviour
         }
 
         lastCheckPointPosition = character.transform.position;
+        canDie = true;
     }
 
-    public void SubtractLife(float subtractedLife) {
+    //isToDie = true, si restamos vida por caída o cualquier otra cosa que quite vida.
+    //isToDie = false, si restamos vida pero no queremos que muera, sino que es con otro fin, por ejemplo para regresar al ultimo checkPoint
+    public void SubtractLife(float subtractedLife, bool isToDie) {
         currentLife -= subtractedLife;
+        canDie = isToDie;
     }
 
     public void UpdateMaxLife(float newMaxLife) {
@@ -68,7 +74,9 @@ public class PlayerLifeController : MonoBehaviour
     public void ResurrectAtLastCheckPoint() {
         fader.FadeOut(screenFadingDuration);
 
-        character.transform.rotation = new Quaternion(character.transform.rotation.x, character.transform.rotation.y, character.transform.rotation.z + 0.8f * Time.deltaTime, character.transform.rotation.w);
+        if(canDie) {
+            character.transform.rotation = new Quaternion(character.transform.rotation.x, character.transform.rotation.y, character.transform.rotation.z + 0.8f * Time.deltaTime, character.transform.rotation.w);
+        }
 
         GetComponent<VerticalMovement>().enabled = false;
 
@@ -82,6 +90,7 @@ public class PlayerLifeController : MonoBehaviour
             GetComponent<VerticalMovement>().enabled = true;
 
             currentLife = maxLife;
+            canDie = true;
             screenFadingTime = 0;
         }
     }
