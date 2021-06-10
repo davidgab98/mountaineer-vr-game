@@ -29,13 +29,13 @@ public class LocomotionController : MonoBehaviour
         if(leftTeleportRay) {
             //bool isLeftInteractorRayHovering = leftRayInteractor.TryGetHitInfo(out pos, out norm, out index, out validTarget);
             bool isLeftInteractorRayHovering = leftRayInteractor.TryGetHitInfo(out _, out _, out _, out _); //Usamos _ (valor de descarte) debido a que no nos interesa el valor de salida (asi, se lo indicamos al compilador y a un posible lector del codigo)
-            leftTeleportRay.gameObject.SetActive(enableLeftTeleport && CheckIfActivated(leftTeleportRay) && !isLeftInteractorRayHovering && !blockedTeleport);
+            leftTeleportRay.gameObject.SetActive(enableLeftTeleport && CheckIfActivated(leftTeleportRay) && !CheckIfActivated(rightTeleportRay) && !isLeftInteractorRayHovering && !blockedTeleport);
         }
 
         if(rightTeleportRay) {
             //bool isRightInteractorRayHovering = rightRayInteractor.TryGetHitInfo(out pos, out norm, out index, out validTarget);
             bool isRightInteractorRayHovering = rightRayInteractor.TryGetHitInfo(out _, out _, out _, out _);
-            rightTeleportRay.gameObject.SetActive(enableRightTeleport && CheckIfActivated(rightTeleportRay) && !isRightInteractorRayHovering && !blockedTeleport);
+            rightTeleportRay.gameObject.SetActive(enableRightTeleport && CheckIfActivated(rightTeleportRay) && !CheckIfActivated(leftTeleportRay) && !isRightInteractorRayHovering && !blockedTeleport);
         }
     }
 

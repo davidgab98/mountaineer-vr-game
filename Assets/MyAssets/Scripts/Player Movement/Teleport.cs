@@ -28,7 +28,7 @@ public class Teleport : TeleportationProvider {
     public override bool QueueTeleportRequest(TeleportRequest teleportRequest) {
         if(!teleporting) {
             teleportDestination = teleportRequest.destinationPosition;
-            
+
             teleporting = true;
             return true;
         }
